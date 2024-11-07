@@ -4,9 +4,23 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static UnityEngine.UI.Image;
+using UnityEngine.UIElements;
 
 public class PlacementSystem : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject lTrail;
+    private GameObject trail1;
+
+    [SerializeField]
+    private GameObject shortTrail;
+    private GameObject trail2;
+
+    [SerializeField]
+    private GameObject longTrail;
+    private GameObject trail3;
+
     [SerializeField]
     private InputManager inputManager;
 
@@ -16,7 +30,6 @@ public class PlacementSystem : MonoBehaviour
     [SerializeField]
     private GameObject mouseIndicator, cellIndicator;
 
-    [SerializeField]
     private List<GameObject> trail = new List<GameObject>();
 
     [SerializeField]
@@ -28,6 +41,17 @@ public class PlacementSystem : MonoBehaviour
 
     private void Start()
     {
+        Instantiate(lTrail, new Vector3(-5, -3.69f, 0), Quaternion.identity);
+        Instantiate(shortTrail, new Vector3(-1, -4.2f, 0), Quaternion.identity);
+        Instantiate(longTrail, new Vector3(4, -4.66f, 0), Quaternion.identity);
+        trail1 = GameObject.FindGameObjectWithTag("LTrail");
+        trail2 = GameObject.FindGameObjectWithTag("ShortTrail");
+        trail3 = GameObject.FindGameObjectWithTag("LongTrail");
+
+        trail.Add(trail1);
+        trail.Add(trail2);
+        trail.Add(trail3);
+
         SetObstaclesForScene();
     }
 
@@ -76,6 +100,7 @@ public class PlacementSystem : MonoBehaviour
         // Ensure num is valid and a trail piece is selected
         if (num >= 0)
         {
+            Debug.Log(trail[num].transform.position);
             // Make the selected trail piece follow the mouse position on the grid
             trail[num].transform.position = grid.CellToWorld(gridPosition);
 
