@@ -9,6 +9,9 @@ using UnityEngine.UIElements;
 
 public class PlacementSystem : MonoBehaviour
 {
+    public AudioSource src;
+    public AudioClip placeTrail, rotateTrail;
+
     [SerializeField]
     private GameObject lTrail;
     private GameObject trail1;
@@ -41,9 +44,9 @@ public class PlacementSystem : MonoBehaviour
 
     private void Start()
     {
-        Instantiate(lTrail, new Vector3(-5, -3.69f, 0), Quaternion.identity);
-        Instantiate(shortTrail, new Vector3(-1, -4.2f, 0), Quaternion.identity);
-        Instantiate(longTrail, new Vector3(4, -4.66f, 0), Quaternion.identity);
+        Instantiate(lTrail, new Vector3(-5, -2.8f, 0), Quaternion.identity);
+        Instantiate(shortTrail, new Vector3(-1, -3.8f, 0), Quaternion.identity);
+        Instantiate(longTrail, new Vector3(3.5f, -3, 0), Quaternion.identity);
         trail1 = GameObject.FindGameObjectWithTag("LTrail");
         trail2 = GameObject.FindGameObjectWithTag("ShortTrail");
         trail3 = GameObject.FindGameObjectWithTag("LongTrail");
@@ -100,7 +103,7 @@ public class PlacementSystem : MonoBehaviour
         // Ensure num is valid and a trail piece is selected
         if (num >= 0)
         {
-            Debug.Log(trail[num].transform.position);
+            //Debug.Log(trail[num].transform.position);
             // Make the selected trail piece follow the mouse position on the grid
             trail[num].transform.position = grid.CellToWorld(gridPosition);
 
@@ -109,6 +112,8 @@ public class PlacementSystem : MonoBehaviour
             {
                 // Rotate the sprite's pivot by 90 degrees
                 trail[num].transform.Rotate(0, 0, 90);
+                src.clip = rotateTrail;
+                src.Play();
             }
 
             // Place the trail piece when the left mouse button is clicked
@@ -119,6 +124,8 @@ public class PlacementSystem : MonoBehaviour
                     // Place the trail piece if the cell is not an obstacle
                     trail[num].transform.position = grid.CellToWorld(gridPosition);
                     num = -1; // Deselect the piece after placing
+                    src.clip = placeTrail;
+                    src.Play();
                 }
                 else
                 {
