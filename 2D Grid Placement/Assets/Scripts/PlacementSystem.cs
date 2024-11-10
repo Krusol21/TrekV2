@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using static UnityEngine.UI.Image;
 using UnityEngine.UIElements;
+using UnityEngine.Tilemaps;
 
 public class PlacementSystem : MonoBehaviour
 {
@@ -24,8 +25,20 @@ public class PlacementSystem : MonoBehaviour
     private GameObject longTrail;
     private GameObject trail3;
 
+    //[SerializeField]
+    //private GameObject longTrail2;
+    //private GameObject trail4;
+
+    //[SerializeField] private List<GameObject> Trails;
+    //[SerializeField] private List<Vector2> TrailPositions;
+
+    [SerializeField] private Tilemap woods;
+
     [SerializeField]
     private InputManager inputManager;
+
+    [SerializeField]
+    private AnswerManager answerManager;
 
     [SerializeField]
     private Grid grid;
@@ -44,6 +57,12 @@ public class PlacementSystem : MonoBehaviour
 
     private void Start()
     {
+        //for(int i = 0; i < Trails.count; i++)
+        //{
+        //    GameObject newTrail = Instantiate(Trails[i], TrailPositions[i], Quaternion.identity);
+        //    trail.Add(newTrail);
+        //}
+
         Instantiate(lTrail, new Vector3(-5, -2.8f, 0), Quaternion.identity);
         Instantiate(shortTrail, new Vector3(-1, -3.8f, 0), Quaternion.identity);
         Instantiate(longTrail, new Vector3(3.5f, -3, 0), Quaternion.identity);
@@ -54,6 +73,8 @@ public class PlacementSystem : MonoBehaviour
         trail.Add(trail1);
         trail.Add(trail2);
         trail.Add(trail3);
+
+        answerManager.SetAnswerList(trail);
 
         SetObstaclesForScene();
     }
@@ -112,6 +133,7 @@ public class PlacementSystem : MonoBehaviour
             {
                 // Rotate the sprite's pivot by 90 degrees
                 trail[num].transform.Rotate(0, 0, 90);
+                //Debug.Log(trail[num].transform.rotation.eulerAngles.z);
                 src.clip = rotateTrail;
                 src.Play();
             }
@@ -119,19 +141,33 @@ public class PlacementSystem : MonoBehaviour
             // Place the trail piece when the left mouse button is clicked
             if (Input.GetMouseButtonDown(0))
             {
+
+                Debug.Log(gridPosition);
                 if (!obstaclePositions.Contains(gridPosition))
                 {
                     // Place the trail piece if the cell is not an obstacle
                     trail[num].transform.position = grid.CellToWorld(gridPosition);
-                    num = -1; // Deselect the piece after placing
                     src.clip = placeTrail;
                     src.Play();
+
+                    // Set the trail piece's current position and rotation
+                    trail[num].GetComponent<Trail>().CurrentPos = gridPosition;
+                    trail[num].GetComponent<Trail>().Rotation = trail[num].transform.rotation.eulerAngles.z;
+
+                    // Check if the trail piece is placed correctly
+                    trail[num].GetComponent<Trail>().CheckAnswer();
+
+                    if (answerManager.CheckAnswers(trail))
+                    {
+                        Debug.Log("All trails are placed correctly!");
+                    }
+
+                    num = -1; // Deselect the piece after placing
                 }
                 else
                 {
                     Debug.Log("Cannot place trail here - it's an obstacle.");
                 }
-
             }
         }
 

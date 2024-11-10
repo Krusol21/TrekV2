@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1070800058658928495}
   - component: {fileID: 8017193637867835046}
+  - component: {fileID: 3350046716537555541}
   m_Layer: 0
   m_Name: Short Trail
   m_TagString: ShortTrail
@@ -84,3 +85,15 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &3350046716537555541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 473160601618630650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51ce9b07d6c9f814abed51e700a0b439, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4217780523243137350}
   - component: {fileID: 4348601098289529915}
+  - component: {fileID: 87526858314331315}
   m_Layer: 0
   m_Name: L Trail
   m_TagString: LTrail
@@ -84,3 +85,15 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &87526858314331315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4593947365904385333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51ce9b07d6c9f814abed51e700a0b439, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

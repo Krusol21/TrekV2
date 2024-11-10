@@ -7634,13 +7634,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   src: {fileID: 1150159555}
-  pickupTrail: {fileID: 8300000, guid: 2506e2e6487f33e44a9f035f65f72193, type: 3}
   placeTrail: {fileID: 8300000, guid: 98250ae689f8e044a83c243f8fe482a7, type: 3}
   rotateTrail: {fileID: 8300000, guid: 8b49ed96772567a4ea12e6f1b84fa9eb, type: 3}
   lTrail: {fileID: 4593947365904385333, guid: 47b542ab343ad0c44b37fe1a9ee743d1, type: 3}
   shortTrail: {fileID: 473160601618630650, guid: 1aa7fa688e659864ba9c437d3f0e3359, type: 3}
   longTrail: {fileID: 6819130924444666238, guid: 8185af369a252aa40b1431cee89dd0f4, type: 3}
   inputManager: {fileID: 1495489124}
+  answerManager: {fileID: 1985481623}
   grid: {fileID: 979531105}
   mouseIndicator: {fileID: 1105837337}
   cellIndicator: {fileID: 899874789}
@@ -7741,6 +7741,55 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1985481622
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1985481624}
+  - component: {fileID: 1985481623}
+  m_Layer: 0
+  m_Name: AnswerManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1985481623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1985481622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5867a150367d4db44839547a9bd6824f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  positionAnswer:
+  - {x: 2, y: 2, z: 0}
+  - {x: 2, y: 2, z: 0}
+  - {x: 2, y: 2, z: 0}
+  rotationAnswers: 000000000000000000000000
+--- !u!4 &1985481624
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1985481622}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7894,3 +7943,4 @@ SceneRoots:
   - {fileID: 1696379453}
   - {fileID: 1150159556}
   - {fileID: 912102764}
+  - {fileID: 1985481624}
