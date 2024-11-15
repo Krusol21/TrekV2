@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 using static UnityEngine.UI.Image;
 using UnityEngine.UIElements;
 using UnityEngine.Tilemaps;
+using TMPro;
 
 public class PlacementSystem : MonoBehaviour
 {
@@ -41,19 +42,20 @@ public class PlacementSystem : MonoBehaviour
     private AnswerManager answerManager;
 
     [SerializeField]
-    private Grid grid;
+    private ObstacleManager obstacleManager;
+
+    [SerializeField]
+    public Grid grid;
 
     [SerializeField]
     private GameObject mouseIndicator, cellIndicator;
 
     private List<GameObject> trail = new List<GameObject>();
 
-    [SerializeField]
-    private GameObject obstaclePrefab;
-
-    private List<Vector3Int> obstaclePositions = new List<Vector3Int>();
     private int num = -1; // Initialize with -1 to avoid selection until a key is pressed.
     private Vector3Int lastDetectedPosition = Vector3Int.zero;
+
+    [SerializeField] public GameObject congratsText;
 
     private void Start()
     {
@@ -76,37 +78,7 @@ public class PlacementSystem : MonoBehaviour
 
         answerManager.SetAnswerList(trail);
 
-        SetObstaclesForScene();
-    }
-
-    private void SetObstaclesForScene()
-    {
-        string sceneName = SceneManager.GetActiveScene().name;
-
-        // Clear previous obstacles
-        obstaclePositions.Clear();
-
-        // Set obstacle positions based on the scene name
-        if (sceneName == "Level1")
-        {
-            obstaclePositions = new List<Vector3Int>
-            {
-                //TODO set obstacle tiles
-            };
-        }
-        else if (sceneName == "Level2")
-        {
-            obstaclePositions = new List<Vector3Int>
-            {
-                //TODO set obstacle tiles
-            };
-        }
-
-        // send obstacle prefab to obstacle tiles
-        foreach (Vector3Int pos in obstaclePositions)
-        {
-            Instantiate(obstaclePrefab, grid.CellToWorld(pos), Quaternion.identity);
-        }
+        congratsText.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -124,16 +96,12 @@ public class PlacementSystem : MonoBehaviour
         // Ensure num is valid and a trail piece is selected
         if (num >= 0)
         {
-            //Debug.Log(trail[num].transform.position);
-            // Make the selected trail piece follow the mouse position on the grid
             trail[num].transform.position = grid.CellToWorld(gridPosition);
 
-            // Rotate the trail piece when the 'R' key is pressed
+            // Rotate the trail piece when 'R' is pressed
             if (Input.GetKeyDown(KeyCode.R))
             {
-                // Rotate the sprite's pivot by 90 degrees
                 trail[num].transform.Rotate(0, 0, 90);
-                //Debug.Log(trail[num].transform.rotation.eulerAngles.z);
                 src.clip = rotateTrail;
                 src.Play();
             }
@@ -141,25 +109,23 @@ public class PlacementSystem : MonoBehaviour
             // Place the trail piece when the left mouse button is clicked
             if (Input.GetMouseButtonDown(0))
             {
-
                 Debug.Log(gridPosition);
-                if (!obstaclePositions.Contains(gridPosition))
+                if (!obstacleManager.obstaclePositions.Contains(gridPosition))
                 {
                     // Place the trail piece if the cell is not an obstacle
                     trail[num].transform.position = grid.CellToWorld(gridPosition);
                     src.clip = placeTrail;
                     src.Play();
 
-                    // Set the trail piece's current position and rotation
                     trail[num].GetComponent<Trail>().CurrentPos = gridPosition;
                     trail[num].GetComponent<Trail>().Rotation = trail[num].transform.rotation.eulerAngles.z;
 
-                    // Check if the trail piece is placed correctly
                     trail[num].GetComponent<Trail>().CheckAnswer();
 
                     if (answerManager.CheckAnswers(trail))
                     {
                         Debug.Log("All trails are placed correctly!");
+                        congratsText.gameObject.SetActive(true);
                     }
 
                     num = -1; // Deselect the piece after placing
@@ -170,10 +136,6 @@ public class PlacementSystem : MonoBehaviour
                 }
             }
         }
-
-        if (lastDetectedPosition != gridPosition)
-        {
-            lastDetectedPosition = gridPosition;
-        }
     }
+
 }
